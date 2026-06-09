@@ -13,6 +13,7 @@ export default function RolesSlider() {
     { title: "Data Science", image: "../../src/assets/images/Cench.jpeg" },
     { title: "Cyber Security", image: "../../src/assets/images/Chelsea.webp" },
     { title: "Cloud Computing", image: "../../src/assets/images/centralCee.png" },
+    { title: "Youtuber", image: "../../src/assets/images/centralCee.png" },
   ];
 
   return (
