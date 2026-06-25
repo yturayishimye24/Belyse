@@ -54,7 +54,7 @@ function Home() {
   return (
     <div>
       <nav className="hidden xl:flex justify-between items-center px-16 py-6">
-        <div className="text-3xl font-medium cursor-default"><img src={LOGO} alt="Profile" className="w-[300px] h-auto object-cover" /></div>
+        <div className="text-3xl font-medium cursor-default"><img src={LOGO} alt="Profile" className="w-[100px] h-auto object-cover" /></div>
 
         <div>
           <ul className="flex gap-8 text-2xl">
