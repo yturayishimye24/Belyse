@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaInstagram, FaLinkedin } from "react-icons/fa";
 //images imports
 import BrownCench from "../../src/assets/images/BrownCench.jpeg";
@@ -6,20 +6,95 @@ import cench from "../../src/assets/images/Cench.jpeg";
 import { useRef } from "react";
 import Chelsea from "../../src/assets/images/Chelsea.webp";
 import LOGO from "../../src/assets/images/LOGO.png";
-
-
+//Button design imported from UIVerse
+import Button from "../components/ContactButton.jsx";
+//New footer import
+import NewFooter from "../components/NewFooter.jsx";
 //components imports
 import Experience from "../components/Experience.jsx";
 import Projects from "../components/Projects.jsx";
 import RoleSlider from "../components/RolesSlider.jsx";
 import Footer from "../components/Footer.jsx";
 import NewsletterCard from "../components/Contact.jsx";
+//yooprofile
+import GoogleProfileHeader from "../components/googleProfileheader.jsx";
+//imports for design and animations
+import {TweenMax, Power3} from "gsap";
+import {gsap} from "gsap";
+import ClientsCarousel from "../components/Carousel.jsx";
 
 function Home() {
   const aboutRef = useRef(null);
   const experienceRef = useRef(null);
   const projectsRef = useRef(null);
   const contactRef = useRef(null);
+  const profileRef = useRef(null);
+  let textRef = useRef(null);
+  const containerRef = useRef(null);
+  const mytextRef = useRef(null);
+  const pathRef = useRef(null);
+
+
+  useEffect(() => {
+   
+    const ctx = gsap.context(() => {
+      gsap.from(mytextRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: 'power3.out',
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+
+    // 1. Measure the exact length of the path
+    const pathLength = path.getTotalLength();
+
+    // 2. Hide the line completely on mount
+    gsap.set(path, {
+      strokeDasharray: pathLength,
+      strokeDashoffset: pathLength,
+    });
+
+    // 3. Play the drawing animation immediately
+    gsap.to(path, {
+      strokeDashoffset: 0,
+      duration: 1.4,
+      ease: 'power2.inOut',
+      delay: 0.2, // Short pause so the user sees it start drawing
+    });
+  }, []);
+
+  useEffect(() => {
+    TweenMax.to(
+      profileRef.current,
+      .9,
+      {
+        opacity: 1,
+        y: -60,
+        ease: Power3.easeOut
+      }
+    )
+  },[]);
+  useEffect(() => {
+    TweenMax.from(
+      textRef.current,
+      .9,
+      {
+        opacity: 1,
+        ease: Power3.easeOut,
+        delay: .3,
+        x: -30,
+      }
+    )
+  })
 
   const handleMoveToAbout = () => {
     if (aboutRef.current) {
@@ -52,11 +127,12 @@ function Home() {
   };
 
   return (
-    <div>
+    <div ref={containerRef}
+       className="bg-[linear-gradient(to_right,#0002_1px,transparent_1px),linear-gradient(to_bottom,#0002_1px,transparent_1px)] bg-[size:60px_60px]">
       <nav className="hidden xl:flex justify-between items-center px-16 py-6">
-        <div className="text-3xl font-medium cursor-default"><img src={LOGO} alt="Profile" className="w-[100px] h-auto object-cover" /></div>
+        <div className="text-3xl font-medium cursor-default">Belyse A.</div>
 
-        <div>
+        <div >
           <ul className="flex gap-8 text-2xl">
             <li>
               <a
@@ -90,7 +166,7 @@ function Home() {
         </div>
 
         <div>
-          <button className="group flex items-center gap-2 border border-black rounded-full px-6 py-3 hover:bg-black hover:text-white transition-all duration-300">
+          {/* <button className="group flex items-center gap-2 border border-black rounded-full px-6 py-3 hover:bg-black hover:text-white transition-all duration-300">
             <a href="#contact" onClick={handleMoveToContact}>
               Get in touch
             </a>
@@ -115,7 +191,8 @@ function Home() {
                 fill="none"
               ></polyline>
             </svg>
-          </button>
+          </button> */}
+          <Button onClick={handleMoveToContact} />
         </div>
       </nav>
 
@@ -204,6 +281,7 @@ function Home() {
       >
         <div>
           <img
+            ref={profileRef}
             src={cench}
             alt="Profile"
             className="w-[400px] h-[400px] object-cover rounded-full xl:w-[400px] xl:h-[400px] md:w-[275px] md:h-[275px]"
@@ -213,7 +291,21 @@ function Home() {
         <div className="text-center">
           <p className="text-lg">Hello, I'm</p>
 
-          <h1 className="text-6xl font-bold mt-2">Central Cee</h1>
+          <h1 ref={textRef} className="text-6xl font-bold mt-2 opacity-0"><span className="relative inline-block px-2">Central Cee</span>
+          <svg
+            className="absolute -top-2 -left-2 w-[115%] h-[140%] pointer-events-none overflow-visible"
+            viewBox="0 0 200 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              ref={pathRef}
+              d="M 10 30 C 10 10, 190 5, 190 30 C 190 55, 15 50, 10 30"
+              stroke="#EAB308" /* Yellow-500 Tailwind color */
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+          </svg></h1>
 
           <p className="text-3xl mt-4 text-gray-600">a Student</p>
 
@@ -228,18 +320,33 @@ function Home() {
           </div>
 
           <div className="flex justify-center gap-6 mt-8">
-            <FaInstagram size={50} />
-            <FaLinkedin size={50} />
+            <FaInstagram size={50} color="purple" className="hover:text-purple-500 cursor-pointer" /> 
+
+            <FaLinkedin size={50} color="blue" className="hover:text-blue-500 cursor-pointer"/>
           </div>
         </div>
       </section>
-
+       
       {/* About Section */}
       <section
         ref={aboutRef}
         className="min-h-screen px-[5%] py-20 animate-[appearRight_1s_linear]"
       >
-        <p className="text-center text-lg">Get To Know More</p>
+        <p className="text-center text-lg"><span className="relative inline-block px-2">Get To Know More
+          <svg
+            className="absolute -top-2 -left-2 w-[115%] h-[140%] pointer-events-none overflow-visible"
+            viewBox="0 0 200 60"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              ref={pathRef}
+              d="M 10 30 C 10 10, 190 5, 190 30 C 190 55, 15 50, 10 30"
+              stroke="#EAB308" 
+              strokeWidth="3"
+              strokeLinecap="round"
+            />
+          </svg></span></p>
 
         <h1 className="text-center text-4xl md:text-5xl font-sans text-gray-900 tracking-tight font-normal">
           About Me
@@ -262,7 +369,7 @@ function Home() {
         <Experience />
       </section>
 
-      
+   
       <section
         ref={projectsRef}
         className="min-h-screen px-[5%]  animate-[appearRight_1s_linear]"
@@ -272,6 +379,9 @@ function Home() {
         <h1 className="text-center text-5xl font-bold mt-2">Projects</h1>
 
         <Projects />
+      </section>
+      <section>
+        <ClientsCarousel/>
       </section>
 
       <section
@@ -289,7 +399,7 @@ function Home() {
 
      
       {/* //Footer */}
-      <Footer/>
+      <NewFooter/>
 
    
     </div>

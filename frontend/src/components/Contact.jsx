@@ -20,11 +20,10 @@ export default function NewsletterCard() {
       {/* Main card text content layout */}
       <div className="max-w-xl mb-6">
         <h2 className="text-3xl md:text-4xl font-normal text-[#1f1f1f] tracking-tight leading-tight">
-          Get the latest news from Google in your inbox
+          Please, let's stay in touch! <br />
         </h2>
         <p className="mt-4 text-[15px] leading-relaxed text-[#5f6368]">
-          Sign up to receive top stories from the week — from product announcements, 
-          to everyday tips and tricks.
+          Input your email and a message that you would like to send me, and I will get back to you as soon as possible. Your privacy is important to me, and your email will only be used for communication purposes.
         </p>
       </div>
 
@@ -34,6 +33,14 @@ export default function NewsletterCard() {
         {/* Email input line field matched to Google Material Design patterns */}
         <div className="relative w-full md:max-w-md mb-12">
           <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            placeholder="Enter your email address"
+            className="w-full h-14 px-4 bg-transparent border-b-2 border-[#747775] text-[#1f1f1f] placeholder-[#5f6368] focus:outline-none focus:border-[#0b57d0] transition-colors duration-200 text-base"
+          />
+           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

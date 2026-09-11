@@ -1,5 +1,7 @@
 import React from "react";
-
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { useRef } from "react";
 // 1. Array containing data matching the structures in your recording
 const OPPORTUNITIES = [
   {
@@ -37,13 +39,36 @@ const OPPORTUNITIES = [
 ];
 
 function Experience() {
+  const pathRef = React.useRef(null);
+   useEffect(() => {
+    const path = pathRef.current;
+    if (!path) return;
+
+    // 1. Measure the exact length of the path
+    const pathLength = path.getTotalLength();
+
+    // 2. Hide the line completely on mount
+    gsap.set(path, {
+      strokeDasharray: pathLength,
+      strokeDashoffset: pathLength,
+    });
+
+    // 3. Play the drawing animation immediately
+    gsap.to(path, {
+      strokeDashoffset: 0,
+      duration: 1.4,
+      ease: 'power2.inOut',
+      delay: 0.2, // Short pause so the user sees it start drawing
+    });
+  }, []);
   return (
     <div className="w-full max-w-7xl mx-auto px-6 py-20 bg-white">
       
       {/* Title Header Section */}
       <div className="text-center mb-16">
         <h2 className="text-4xl md:text-5xl font-sans text-gray-900 tracking-tight font-normal">
-          Discover the Experiences
+          <span className="relative inline-block ">My high school experiences</span>
+           
         </h2>
       </div>
 
