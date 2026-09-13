@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useRef} from 'react';
+
 
 const Button = () => {
+  const buttonRef = useRef(null);
+  function goToContact() {
+    document.getElementById('contact-section').scrollIntoView({behavior: 'smooth'});
+  }
   return (
     <StyledWrapper>
-      <button>Get in touch</button>
+      <button onClick={goToContact}>
+        Get in touch
+      </button>
     </StyledWrapper>
   );
 }
@@ -56,7 +64,7 @@ const StyledWrapper = styled.div`
   }
 
   button:active:before {
-    background: #3a0ca3;
+    background: black;
     transition: background 0s;
   }`;
 

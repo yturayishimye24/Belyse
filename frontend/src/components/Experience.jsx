@@ -2,15 +2,15 @@ import React from "react";
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { useRef } from "react";
-// 1. Array containing data matching the structures in your recording
+
 const OPPORTUNITIES = [
   {
     id: 1,
     title: "Scholarships",
     description: "We offer a range of scholarships designed to assist exceptional school students pursuing a technical or computer secondary education path in modern technology.",
     buttonText: "Explore",
-    accentColor: "bg-blue-600", // Tailwind color for top line bar
-    bgColor: "bg-blue-50/60"      // Subtle body backdrop fill
+    accentColor: "bg-blue-600", 
+    bgColor: "bg-blue-50/60"     
   },
   {
     id: 2,
@@ -62,7 +62,7 @@ function Experience() {
     });
   }, []);
   return (
-    <div className="w-full max-w-7xl mx-auto px-6 py-20 bg-white">
+    <div className="w-full max-w-7xl mx-auto px-6 py-20">
       
       {/* Title Header Section */}
       <div className="text-center mb-16">

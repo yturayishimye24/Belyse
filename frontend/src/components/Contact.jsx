@@ -1,21 +1,42 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import {ToastContainer, toast} from 'react-toastify';
+
+
 
 export default function NewsletterCard() {
   const [email, setEmail] = useState('');
-
-  const handleSubmit = (e) => {
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const response = await axios.post(`${backendUrl}/api/send-email/create`, {
+        email,
+        subject,
+        message
+      });
+      if(response.data.success){
+        toast.success('Email sent successfully!', {
+          position: "top-right",
+          autoClose: 5000
+        });
+      }
+    }catch(error){
+      toast.error('Failed to send email. Please try again later.', {
+        position: "top-right",
+        autoClose: 5000
+      });
+      console.log("Error while sending email:", error);
+    }
     
-    // Ready for your Multer / backend integration later:
-    // e.g., const formData = new FormData();
-    // formData.append('email', email);
-    // fetch('/api/subscribe', { method: 'POST', body: formData })
     
     console.log('Sending email data to backend:', email);
   };
 
   return (
-    <div className="relative w-full max-w-2xl bg-[#f8f9fa] border border-[#e0e0e0] rounded-[28px] p-8 md:p-10 font-sans shadow-sm overflow-hidden mx-auto">
+    <div className="relative w-full max-w-2xl bg-[#f8f9fa] border border-[#e0e0e0] rounded-[28px] p-8 md:p-10 font-sans shadow-sm overflow-hidden mx-auto" id="contact-section">
       
       {/* Main card text content layout */}
       <div className="max-w-xl mb-6">
@@ -33,32 +54,37 @@ export default function NewsletterCard() {
         {/* Email input line field matched to Google Material Design patterns */}
         <div className="relative w-full md:max-w-md mb-12">
           <input
+          type ="text"
+          value={subject}
+          onChange={(e) => setSubject(e.target.value)}
+          required
+          placeholder="Subject...."
+          className="w-full h-14 px-4 bg-transparent border-b-2 border-[#747775] text-[#1f1f1f] placeholder-[#5f6368] focus:outline-none focus:border-[#0b57d0] transition-colors duration-200 text-base"
+        />
+          <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="Enter your email address"
+            placeholder="Enter email...."
             className="w-full h-14 px-4 bg-transparent border-b-2 border-[#747775] text-[#1f1f1f] placeholder-[#5f6368] focus:outline-none focus:border-[#0b57d0] transition-colors duration-200 text-base"
           />
            <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             required
-            placeholder="Enter your email address"
+            placeholder="Message...."
             className="w-full h-14 px-4 bg-transparent border-b-2 border-[#747775] text-[#1f1f1f] placeholder-[#5f6368] focus:outline-none focus:border-[#0b57d0] transition-colors duration-200 text-base"
           />
         </div>
 
-        {/* Asymmetric Full-width Bottom Anchor Layout for the "Send" button.
-          Translates directly to your preferred left-indented custom curve profile.
-        */}
+       
         <div className="absolute bottom-[-40px] right-[-40px] h-16 bg-[#f8f9fa] z-20 flex justify-end items-stretch pl-8">
           
-          {/* Custom geometric left shadow cutout to match Google's overlapping alignment */}
           <div className="absolute left-[-24px] top-[-24px] w-12 h-12 bg-transparent rounded-full shadow-[12px_12px_0_0_#f8f9fa] pointer-events-none"></div>
           
-          {/* The primary Material Design action button */}
+          
           <button
             type="submit"
             className="px-8 bg-[#e8f0fe] hover:bg-[#d2e3fc] text-[#0b57d0] rounded-tl-[24px] rounded-br-[28px] flex items-center justify-center gap-2 font-medium text-sm transition-colors duration-200"
@@ -77,6 +103,7 @@ export default function NewsletterCard() {
         </div>
 
       </form>
+      <ToastContainer position="top-right" />
     </div>
   );
 }
