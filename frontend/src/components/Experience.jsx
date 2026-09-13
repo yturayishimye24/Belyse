@@ -8,7 +8,7 @@ const OPPORTUNITIES = [
     id: 1,
     title: "Scholarships",
     description: "We offer a range of scholarships designed to assist exceptional school students pursuing a technical or computer secondary education path in modern technology.",
-    buttonText: "Explore",
+    buttonText: "Read More",
     accentColor: "bg-blue-600", 
     bgColor: "bg-blue-50/60"     
   },
@@ -16,7 +16,7 @@ const OPPORTUNITIES = [
     id: 2,
     title: "Internships",
     description: "Our #GoogleInterns and residents help build products that create opportunities for everyone. Bring your insight, imagination, and a healthy disregard for the impossible.",
-    buttonText: "Explore",
+    buttonText: "Read More",
     accentColor: "bg-red-500",
     bgColor: "bg-red-50/60"
   },
@@ -24,7 +24,7 @@ const OPPORTUNITIES = [
     id: 3,
     title: "Apprenticeships",
     description: "Apprentices join different teams to gain practical skills while at Google, and study towards an externally-recognized premium professional qualification.",
-    buttonText: "Explore",
+    buttonText: "Read More",
     accentColor: "bg-yellow-500",
     bgColor: "bg-yellow-50/60"
   },
@@ -32,7 +32,7 @@ const OPPORTUNITIES = [
     id: 4,
     title: "Programs",
     description: "Dive in to find programs that match your interests. Immerse yourself in software development and technical project work to prepare you for future placement options.",
-    buttonText: "Explore",
+    buttonText: "Read More",
     accentColor: "bg-green-600",
     bgColor: "bg-green-50/60"
   }
@@ -40,6 +40,19 @@ const OPPORTUNITIES = [
 
 function Experience() {
   const pathRef = React.useRef(null);
+  const toggleFullScreen = (event) => {
+    const element = event.currentTarget.closest("[data-experience-card]");
+
+    if (!element) return;
+
+    if (document.fullscreenElement === element) {
+      document.exitFullscreen();
+    } else if (!document.fullscreenElement) {
+      element.requestFullscreen().catch((error) => {
+        console.error("Unable to enter fullscreen mode:", error);
+      });
+    }
+  }
    useEffect(() => {
     const path = pathRef.current;
     if (!path) return;
@@ -77,6 +90,7 @@ function Experience() {
       <div className="flex flex-col lg:flex-row items-stretch gap-4 w-full min-h-[420px] group">
         {OPPORTUNITIES.map((item) => (
           <div
+            data-experience-card
             key={item.id}
             className={`relative flex flex-col justify-between overflow-hidden rounded-[24px] border border-gray-100 p-6 md:p-8 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
               
@@ -122,7 +136,7 @@ function Experience() {
 
             
             <div className="mt-8 flex justify-center lg:justify-start w-full">
-              <button className="inline-flex items-center justify-center border border-gray-300 hover:border-gray-400 bg-white text-blue-600 font-medium px-6 py-2 rounded-full text-sm shadow-sm transition-all duration-200 active:scale-95">
+              <button className="inline-flex items-center justify-center border border-gray-300 hover:border-gray-400 bg-white text-blue-600 font-medium px-6 py-2 rounded-full text-sm shadow-sm transition-all duration-200 active:scale-95" onClick={toggleFullScreen}>
                 {item.buttonText}
               </button>
             </div>
