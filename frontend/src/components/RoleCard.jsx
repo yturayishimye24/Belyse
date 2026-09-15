@@ -1,9 +1,10 @@
 import { ArrowRight } from "lucide-react";
+import ScrollLinkedItem from "./ScrollLinkedItem.jsx";
 
 
 export default function RoleCard({ image, title }) {
   return (
-    <div className="group relative w-[500px] h-[600px] overflow-hidden rounded-[24px] bg-white">
+    <ScrollLinkedItem className="group relative w-[500px] h-[600px] overflow-hidden rounded-[24px] bg-white">
       {/* Image */}
       <img
         src={image}
@@ -48,6 +49,6 @@ export default function RoleCard({ image, title }) {
           </button>
         </div>
       </div>
-    </div>
+    </ScrollLinkedItem>
   );
 }

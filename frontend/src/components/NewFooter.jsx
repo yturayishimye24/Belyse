@@ -1,10 +1,11 @@
 import React from 'react';
+import ScrollLinkedItem from './ScrollLinkedItem.jsx';
 
 export default function NewFooter() {
   return (
     <footer className="w-full bg-white pt-16 pb-8 overflow-hidden">
       {/* Top Section: Oversized Typography */}
-      <div className="max-w-7xl mx-auto px-6 flex justify-center items-center">
+      <ScrollLinkedItem className="max-w-7xl mx-auto px-6 flex justify-center items-center">
         <h1 className="text-[12vw] font-bold text-slate-900 tracking-tight leading-none select-none flex items-baseline">
           Bely
           <span className="-translate-y-[0.35em] text-[0.75em] inline-block font-bold">
@@ -12,10 +13,10 @@ export default function NewFooter() {
           </span>
           e
         </h1>
-      </div>
+      </ScrollLinkedItem>
 
       {/* Bottom Navigation Section */}
-      <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6 text-sm font-medium text-slate-600">
+      <ScrollLinkedItem className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-200 flex flex-col md:flex-row items-center justify-between gap-6 text-sm font-medium text-slate-600">
         {/* Brand / Logo */}
         <div className="text-xl font-bold text-slate-900 tracking-tight">
           Belyse
@@ -36,7 +37,7 @@ export default function NewFooter() {
             Terms
           </a>
         </nav>
-      </div>
+      </ScrollLinkedItem>
     </footer>
   );
 }

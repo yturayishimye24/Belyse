@@ -1,14 +1,22 @@
 @import "tailwindcss";
-@import "taos/dist/taos.css";
 
 .scroll-linked-section {
   --scroll-enter-y: 56px;
   will-change: transform, opacity;
 }
 
+.scroll-linked-item {
+  --scroll-item-y: 28px;
+  will-change: transform, opacity;
+}
+
 @media (max-width: 767px) {
   .scroll-linked-section {
     --scroll-enter-y: 32px;
+  }
+
+  .scroll-linked-item {
+    --scroll-item-y: 18px;
   }
 }
 

@@ -23,6 +23,7 @@ import {TweenMax, Power3} from "gsap";
 import {gsap} from "gsap";
 import ClientsCarousel from "../components/Carousel.jsx";
 import ScrollLinkedSection from "../components/ScrollLinkedSection.jsx";
+import ScrollLinkedItem from "../components/ScrollLinkedItem.jsx";
 
 function Home() {
   const aboutRef = useRef(null);
@@ -396,7 +397,9 @@ function Home() {
         <h1 className="text-5xl font-bold mt-2 mb-20">Contact Me</h1>
 
       
-        <NewsletterCard className="mt-12 w-full" />
+        <ScrollLinkedItem className="mt-12 w-full">
+          <NewsletterCard />
+        </ScrollLinkedItem>
         
       </ScrollLinkedSection>
 

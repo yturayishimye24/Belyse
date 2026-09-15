@@ -6,6 +6,7 @@ import BlueCench from "../../src/assets/images/BlueCench.png";
 // Library imports
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import ScrollLinkedItem from "./ScrollLinkedItem.jsx";
 
 // 1. Unified structure using 'quote' across all members
 const TEAM_MEMBERS = [
@@ -76,46 +77,50 @@ function Projects() {
         {/* Main Container Wrapper */}
         <div className="bg-[#f8f9fa] rounded-[32px] border border-gray-100 shadow-sm min-h-[600px] md:min-h-[400px] flex items-center overflow-hidden relative">
           <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
+            <ScrollLinkedItem
               key={currentMember.id} // Re-renders and fires slide animation when ID changes
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="w-full p-8 md:p-16 flex flex-col md:flex-row items-center gap-8 md:gap-16"
+              className="w-full"
             >
-              {/* Left Column: Avatar Layout */}
-              <div className="flex-shrink-0 w-[180px] h-[180px] md:w-[260px] md:h-[260px]">
-                <div className="w-full h-full rounded-full overflow-hidden border border-gray-200/60 shadow-inner">
-                  <img
-                    src={currentMember.image}
-                    alt={currentMember.name}
-                    className="w-full h-full object-cover"
-                  />
+              <motion.div
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="w-full p-8 md:p-16 flex flex-col md:flex-row items-center gap-8 md:gap-16"
+              >
+                {/* Left Column: Avatar Layout */}
+                <div className="flex-shrink-0 w-[180px] h-[180px] md:w-[260px] md:h-[260px]">
+                  <div className="w-full h-full rounded-full overflow-hidden border border-gray-200/60 shadow-inner">
+                    <img
+                      src={currentMember.image}
+                      alt={currentMember.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              {/* Right Column: Dynamic Typography Grid */}
-              <div className="flex-1 text-center md:text-left flex flex-col justify-center">
-                <span className="text-5xl md:text-6xl font-serif text-gray-300 block mb-2 leading-none md:-ml-2">
-                  “
-                </span>
+                {/* Right Column: Dynamic Typography Grid */}
+                <div className="flex-1 text-center md:text-left flex flex-col justify-center">
+                  <span className="text-5xl md:text-6xl font-serif text-gray-300 block mb-2 leading-none md:-ml-2">
+                    “
+                  </span>
 
-                <p className="text-lg md:text-xl font-light text-gray-700 leading-relaxed -mt-4 mb-6">
-                  {currentMember.quote}
-                </p>
-
-                <div className="border-t border-gray-200/60 pt-4 inline-block">
-                  <p className="text-base font-semibold text-gray-900">
-                    {currentMember.name}
+                  <p className="text-lg md:text-xl font-light text-gray-700 leading-relaxed -mt-4 mb-6">
+                    {currentMember.quote}
                   </p>
-                  <p className="text-sm text-gray-500 mt-0.5 font-medium tracking-wide">
-                    {currentMember.role}
-                  </p>
+
+                  <div className="border-t border-gray-200/60 pt-4 inline-block">
+                    <p className="text-base font-semibold text-gray-900">
+                      {currentMember.name}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-0.5 font-medium tracking-wide">
+                      {currentMember.role}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </ScrollLinkedItem>
           </AnimatePresence>
         </div>
 

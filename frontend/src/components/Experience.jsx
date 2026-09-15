@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import ScrollLinkedItem from "./ScrollLinkedItem.jsx";
 
 const OPPORTUNITIES = [
   {
@@ -88,7 +89,7 @@ function Experience() {
       {/* Accordion Layout Wrapper */}
       <div className="flex flex-col lg:flex-row items-stretch gap-4 w-full min-h-[420px] group">
         {OPPORTUNITIES.map((item) => (
-          <div
+          <ScrollLinkedItem
             key={item.id}
             className={`relative flex flex-col justify-between overflow-hidden rounded-[24px] border border-gray-100 p-6 md:p-8 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]
               w-full h-auto
@@ -122,7 +123,7 @@ function Experience() {
                 {item.buttonText}
               </button>
             </div>
-          </div>
+          </ScrollLinkedItem>
         ))}
       </div>
 

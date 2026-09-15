@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import ScrollLinkedItem from './ScrollLinkedItem.jsx';
 
 const projects = [
   { id: 1, title: 'Panzer Collect', tag: 'Read More', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&auto=format&fit=crop', color: "#4285F4" },
@@ -82,7 +83,7 @@ export default function ClientsCarousel() {
       {/* Horizontal Cards Reel */}
       <div className="flex justify-center items-center gap-3 px-8 py-10 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {projects.map((project, index) => (
-          <div
+          <ScrollLinkedItem
             key={project.id}
             ref={(el) => (cardsRef.current[index] = el)}
             onMouseEnter={() => handleMouseEnter(index)}
@@ -102,7 +103,7 @@ export default function ClientsCarousel() {
             >
               <span className="text-xs font-semibold tracking-wide">{project.tag}</span>
             </div>
-          </div>
+          </ScrollLinkedItem>
         ))}
       </div>
 
