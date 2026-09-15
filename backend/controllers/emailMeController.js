@@ -35,7 +35,10 @@ export async function CreateEmail(req, res) {
     console.error("Error while sending mail:", err);
     return res.status(500).json({
       success: false,
-      message: "Unable to send email.",
+      message:
+        process.env.NODE_ENV === "production"
+          ? "Unable to send email."
+          : err.response || err.message || "Unable to send email.",
     });
   }
 }

@@ -22,6 +22,7 @@ import GoogleProfileHeader from "../components/googleProfileheader.jsx";
 import {TweenMax, Power3} from "gsap";
 import {gsap} from "gsap";
 import ClientsCarousel from "../components/Carousel.jsx";
+import ScrollLinkedSection from "../components/ScrollLinkedSection.jsx";
 
 function Home() {
   const aboutRef = useRef(null);
@@ -291,7 +292,7 @@ function Home() {
         <div className="text-center">
           <p className="text-lg">Hello, I'm</p>
 
-          <h1 ref={textRef} className="text-6xl font-bold mt-2 opacity-0"><span className="relative inline-block px-2">Central Cee</span>
+          <h1 ref={textRef} className="text-6xl font-bold mt-2 opacity-0"><span className="relative inline-block px-2">Belyse A.</span>
           <svg
             className="absolute -top-2 -left-2 w-[115%] h-[140%] pointer-events-none overflow-visible"
             viewBox="0 0 200 60"
@@ -310,9 +311,11 @@ function Home() {
           <p className="text-3xl mt-4 text-gray-600">a Student</p>
 
           <div className="flex flex-wrap justify-center gap-4 mt-8">
+            <a href="/ThisWillBeUpdatedIfBessySharesMeHerCV.pdf" download>
             <button className="border border-black rounded-full px-8 py-4 hover:bg-black hover:text-white transition-all duration-300">
               Download CV
             </button>
+            </a>
 
             <button className="bg-black text-white rounded-full px-8 py-4 hover:bg-gray-800 transition-all duration-300">
               Contact Info
@@ -328,11 +331,11 @@ function Home() {
       </section>
        
       {/* About Section */}
-      <section
+      <ScrollLinkedSection
         ref={aboutRef}
         className="min-h-screen px-[5%] py-20 animate-[appearRight_1s_linear]"
       >
-        <p className="text-center text-lg"><span className="relative inline-block px-2">Get To Know More
+        <p className="text-lg font-semibold text-gray-600 uppercase tracking-wider text-center"><span className="relative inline-block px-2">Get To Know More
           <svg
             className="absolute -top-2 -left-2 w-[115%] h-[140%] pointer-events-none overflow-visible"
             viewBox="0 0 200 60"
@@ -359,43 +362,43 @@ function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </ScrollLinkedSection>
 
       {/* Experience Section */}
-      <section
+      <ScrollLinkedSection
         ref={experienceRef}
         className="min-h-screen px-[5%] py-20 animate-[appearLeft_1s_linear]"
       >
         <Experience />
-      </section>
+      </ScrollLinkedSection>
 
    
-      <section
+      <ScrollLinkedSection
         ref={projectsRef}
         className="min-h-screen px-[5%]  animate-[appearRight_1s_linear]"
       >
-        <p className="text-center text-lg">Browse My Recent</p>
+        <p className="text-lg font-semibold text-gray-600 uppercase tracking-wider text-center">Browse My Recent</p>
 
         <h1 className="text-center text-5xl font-bold mt-2">Projects</h1>
 
         <Projects />
-      </section>
-      <section>
+      </ScrollLinkedSection>
+      <ScrollLinkedSection>
         <ClientsCarousel/>
-      </section>
+      </ScrollLinkedSection>
 
-      <section
+      <ScrollLinkedSection
         ref={contactRef}
         className="min-h-screen px-[5%] flex flex-col justify-center items-center mb-20"
       >
-        <p className="text-lg">Get in Touch</p>
+        <p className="text-lg font-semibold text-gray-600 uppercase tracking-wider text-center">Get in Touch</p>
 
         <h1 className="text-5xl font-bold mt-2 mb-20">Contact Me</h1>
 
       
         <NewsletterCard className="mt-12 w-full" />
         
-      </section>
+      </ScrollLinkedSection>
 
      
       {/* //Footer */}
