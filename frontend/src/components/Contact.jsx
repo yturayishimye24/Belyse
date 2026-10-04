@@ -1,146 +1,70 @@
-import React, { useState } from 'react';
-import emailjs from '@emailjs/browser'; // 1. Replaced axios with emailjs
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+import { BlinkBlur } from "react-loading-indicators";
 
-function FloatingField({ id, label, value, onChange, type = 'text', as = 'input', rows = 4, required = false }) {
-  const Tag = as;
+const field =
+  "peer block w-full rounded-xl border-2 border-[#b9dfe4] bg-white px-4 pb-2 pt-6 text-sm text-gray-900 focus:border-[#008D9F] focus:outline-none";
+const label =
+  "pointer-events-none absolute left-4 top-4 origin-[0] -translate-y-3 scale-75 text-sm text-[#087b89] duration-200 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-gray-500 peer-focus:-translate-y-3 peer-focus:scale-75 peer-focus:text-[#008D9F]";
 
-  const fieldClasses =
-    'peer w-full rounded-lg border border-[#747775] bg-transparent px-4 pt-4 pb-[15px] text-[15px] leading-6 text-[#1f1f1f] outline-none transition-colors duration-150 placeholder-transparent focus:border-2 focus:border-[#0b57d0] focus:px-[15px] focus:pt-[15px] focus:pb-[14px] resize-none';
+export default function Contact() {
+  const [loading, setLoading] = useState(false);
+  const form = useRef();
 
-  const labelClasses =
-    'pointer-events-none absolute left-3 top-4 origin-left bg-[#f8f9fa] px-1 text-[15px] text-[#5f6368] transition-all duration-150 ' +
-    'peer-focus:-top-2.5 peer-focus:left-2.5 peer-focus:scale-[0.8] peer-focus:text-[#0b57d0] ' +
-    'peer-[:not(:placeholder-shown)]:-top-2.5 peer-[:not(:placeholder-shown)]:left-2.5 peer-[:not(:placeholder-shown)]:scale-[0.8] peer-[:not(:placeholder-shown)]:text-[#5f6368]';
-
-  return (
-    <div className="relative w-full">
-      <Tag
-        id={id}
-        name={id} // Crucial: name attribute maps directly to EmailJS dynamic template bracket tags
-        type={as === 'input' ? type : undefined}
-        rows={as === 'textarea' ? rows : undefined}
-        value={value}
-        onChange={onChange}
-        required={required}
-        placeholder=" "
-        className={fieldClasses}
-      />
-      <label htmlFor={id} className={labelClasses}>
-        {label}
-      </label>
-    </div>
-  );
-}
-
-export default function ContactCard() {
-  const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [isSending, setIsSending] = useState(false); // Added loading state flag
-
-  const handleSubmit = async (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
-    setIsSending(true);
-
-    // 2. Define template parameters object mapping to your EmailJS tags
-    const templateParams = {
-      email: email,
-      subject: subject,
-      message: message,
-    };
-
-    // 3. EmailJS credentials configuration settings
-    const SERVICE_ID = 'YOUR_EMAILJS_SERVICE_ID'; // Replace with yours
-    const TEMPLATE_ID = 'YOUR_EMAILJS_TEMPLATE_ID'; // Replace with yours
-    const PUBLIC_KEY = 'YOUR_EMAILJS_PUBLIC_KEY'; // Replace with yours
-
-    emailjs
-      .send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
-      .then(() => {
-        toast.success('Email sent successfully!', {
-          position: 'top-right',
-          autoClose: 5000,
-        });
-        setEmail('');
-        setSubject('');
-        setMessage('');
-        setIsSending(false);
-      })
-      .catch((error) => {
-        toast.error('Failed to send email. Please try again later.', {
-          position: 'top-right',
-          autoClose: 5000,
-        });
-        console.error('EmailJS Error:', error);
-        setIsSending(false);
-      });
+    setLoading(true);
+    try {
+      await emailjs.sendForm("service_fvyjy5k", "template_wjatw3b", form.current, "vfvKIY9D4tzjlkrbJ");
+      alert("Message sent successfully!");
+      form.current.reset();
+    } catch {
+      alert("Failed to send message, please try again");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div
-      className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-[28px] border border-[#e0e0e0] bg-[#f8f9fa] p-8 font-sans shadow-sm md:p-10"
-      id="contact-section"
-    >
-      {/* Heading */}
-      <div className="mb-8 max-w-xl">
-        <h2 className="text-center font-['Segoe_UI',Arial,sans-serif] text-3xl leading-tight tracking-tight text-[#1f1f1f] md:text-4xl">
-          Please, let's stay in touch!
-        </h2>
-        <p className="mt-4 text-center font-poppins text-2xl leading-relaxed text-[#5f6368]">
-          Let's get connected!
-        </p>
+    <div>
+      <div className="mb-10 text-center">
+        <p className="text-sm font-semibold text-[#087b89]">Have a question or an opportunity?</p>
+        <h2 className="mt-1 text-4xl font-bold sm:text-5xl">Get in touch</h2>
       </div>
 
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="relative flex w-full flex-col">
-        <div className="mb-16 flex w-full flex-col gap-6 md:max-w-md">
-          <FloatingField
-            id="subject"
-            label="Subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-            required
-          />
-          <FloatingField
-            id="email"
-            label="Enter email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <FloatingField
-            id="message"
-            label="Message"
-            as="textarea"
-            rows={4}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          />
+      <form ref={form} onSubmit={sendEmail} className="grid gap-4 rounded-3xl bg-white p-6 shadow-lg sm:grid-cols-2 sm:p-8">
+        <div className="relative">
+          <input name="firstName" id="firstName" type="text" placeholder=" " required className={field} />
+          <label htmlFor="firstName" className={label}>First name</label>
         </div>
-
-        {/* Cut-corner send button, anchored to the card's bottom-right edge */}
-        <div className="absolute bottom-0 right-0 flex h-16 items-stretch justify-end">
-          <div className="pointer-events-none absolute -left-6 -top-6 h-12 w-12 rounded-full bg-transparent shadow-[12px_12px_0_0_#f8f9fa]" />
-          <button
-            type="submit"
-            disabled={isSending}
-            className="flex items-center justify-center gap-2 rounded-tl-[24px] rounded-br-[28px] bg-[#e8f0fe] px-8 text-sm font-medium text-[#0b57d0] transition-colors duration-200 hover:bg-[#d2e3fc] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <span>{isSending ? 'Sending...' : 'Send'}</span>
-            {!isSending && (
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            )}
-          </button>
+        <div className="relative">
+          <input name="lastName" id="lastName" type="text" placeholder=" " required className={field} />
+          <label htmlFor="lastName" className={label}>Last name</label>
         </div>
+        <div className="relative sm:col-span-2">
+          <input name="email" id="email" type="email" placeholder=" " required className={field} />
+          <label htmlFor="email" className={label}>Email</label>
+        </div>
+        <div className="relative sm:col-span-2">
+          <textarea name="message" id="message" rows="5" placeholder=" " required className={`${field} resize-none`} />
+          <label htmlFor="message" className={label}>Your message</label>
+        </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="rounded-full bg-gradient-to-r from-[#0D4580] to-[#008D9F] py-3 text-sm font-semibold text-white shadow-md transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2"
+        >
+          {loading ? "Sending..." : "Send message"}
+        </button>
       </form>
 
-      <ToastContainer position="top-right" />
+      {loading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A4857]/40 px-4" role="dialog" aria-modal="true" aria-label="Sending message">
+          <div className="flex min-h-[188px] w-full max-w-sm items-center justify-center rounded-3xl bg-white shadow-xl">
+            <BlinkBlur color={["#0D4580", "#0A4857", "#008D9F", "#45c4cf"]} size="medium" text="" textColor="" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
